@@ -1,6 +1,7 @@
 #include "maxminddb.h"
 
 #include <ruby.h>
+#include <ruby/dl.h>
 #include <ruby/encoding.h>
 
 #include <stdio.h>
@@ -53,6 +54,8 @@ VALUE locate_by_path(MMDB_lookup_result_s *result, char *lookup_path, char *lang
                     return_value = rb_int_new(entry_data.uint32);
                 if (entry_data.type == MMDB_DATA_TYPE_DOUBLE)
                     return_value = rb_float_new(entry_data.double_value);
+                if (entry_data.type == MMDB_DATA_TYPE_BOOLEAN)
+                    return_value = INT2BOOL(entry_data.boolean);
             }
         }
     }
@@ -115,6 +118,7 @@ VALUE mGeoIP2_locate(int argc, VALUE *argv, VALUE self)
             rb_hash_aset(locate_result, rb_str_new2("latitude"), locate_by_path(&result, "location latitude", NULL));
             rb_hash_aset(locate_result, rb_str_new2("longitude"), locate_by_path(&result, "location longitude", NULL));
             rb_hash_aset(locate_result, rb_str_new2("time_zone"), locate_by_path(&result, "location time_zone", NULL));
+            rb_hash_aset(locate_result, rb_str_new2("is_anonymous_proxy"), locate_by_path(&result, "traits is_anonymous_proxy", NULL));
         }
         MMDB_close(&mmdb);
     } else {

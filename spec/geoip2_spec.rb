@@ -71,5 +71,12 @@ describe GeoIP2 do
     it 'has a time_zone' do
       result['time_zone'].must_be_instance_of(String)
     end
+
+    describe 'traits is_anonymous_proxy' do
+      let(:result) { GeoIP2.locate('217.172.190.19') }
+      it 'is exposed when true' do
+        result['is_anonymous_proxy'].must_be_instance_of(TrueClass)
+      end
+    end
   end
 end
