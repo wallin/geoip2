@@ -5,3 +5,4 @@ GeoIP2.so
 Gemfile.lock
 *.bundle
 GeoLite2-City.mmdb
+vendor/bundle
