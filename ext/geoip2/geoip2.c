@@ -1,13 +1,14 @@
 #include "maxminddb.h"
 
 #include <ruby.h>
-#include <ruby/dl.h>
 #include <ruby/encoding.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+
+#define INT2BOOL(x)  ((x)?Qtrue:Qfalse)
 
 VALUE mGeoIP2 = Qnil;
 
